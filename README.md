@@ -6,7 +6,7 @@
 ## This project aims at fetching information on food recipes and ingredients
 
 - Given a food name,api returns a response which is 
-- list of ingredient name,price,measurements
+- a list of ingredient name,price,measurements
 - no. of servings
 - time taken to cook the food
 
