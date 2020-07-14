@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<center><input id="search" placeholder="Food Name"><button style="background-color:blue;color:white;" onclick="getrecipe(document.getElementById('search').value)">Search</button></center>
+<div id="recipe_info"></div>
+<div id="ingredient_info"></div>
+<script>
+function getingredientsinfo(id){
+$.ajax({
+url:"https://api.spoonacular.com/recipes/"+id+"/priceBreakdownWidget.json?apiKey=yourapikey",
+success:function(res){
+    for(var i=0;i<res.ingredients.length;i++)
+        {
+           document.getElementById("ingredient_info").innerHTML+="<center>Name of the ingredient "+i+"--->"+res.ingredients[i].name+"<br>Price of the ingredient "+i+"--->"+res.ingredients[i].price+" rupees<br>Measurements for ingredient "+i+"--->"+res.ingredients[i].amount.metric.value+" "+res.ingredients[i].amount.metric.unit+"</center><hr>"
+          }
+}
+});
+ }
+     function getrecipe(q){
+        $.ajax({
+            url:"https://api.spoonacular.com/recipes/search?apiKey=yourapikey&number=1&query="+q,
+            success:function(res){
+                document.getElementById("recipe_info").innerHTML="<center><h1>"+res.results[0].title+"</h1><br><img src='"+res.baseUri+res.results[0].image+"' width='400'/><br>Time taken to cook the food:"+res.results[0].readyInMinutes+" minutes<br>No. of servings:"+res.results[0].servings+"</center><hr>"
+                getingredientsinfo(res.results[0].id)
+         }
+        });
+     }
+</script>
